@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 18:44:38 by schung            #+#    #+#             */
-/*   Updated: 2022/03/18 20:12:19 by schung           ###   ########.fr       */
+/*   Updated: 2022/03/18 21:44:17 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,59 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-# include "libft.h"
 # include <stdio.h>
 # include <pthread.h>
-#include <sys/time.h>
+# include <sys/time.h>
 
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
-# define ERR "Error\n"
+# define ERR "Incorrect arguments\n"
+# define TAKE_FORK 0
+# define THINK 1
+# define SLEEP 2
+# define EAT 3
+
+typedef struct s_philo
+{
+	int 	index;
+	int		left_fork;
+	int		right_fork;	
+}	t_philo;
 
 typedef struct s_param
 {
-	int	number_of_philosophers;
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-	int	number_of_times;
+	int			number_of_philo;
+	int			time_to_die;
+	int			time_to_eat;
+	int			time_to_sleep;
+	int			number_of_times;
+	pthread_t	*thread;
 }	t_param;
 
+typedef struct s_fork
+{
+	int				index;
+	pthread_mutex_t	fork_taken;
+
+}	t_fork;
+
 /*________philo.c__________*/
+int		set_param(char **argv, t_param *param);
 
 /*________libft.c__________*/
+int		ft_strlen(const char *str);
+void	ft_putstr_fd(char *s, int fd);
 void	ft_bzero(void *src, size_t len);
 int		ft_atoi(const char *str);
+
+/*________living_things.c__________*/
+int		is_thinking(t_param *param);
+int		is_sleeping(t_param *param);
+int		is_eating(t_param *param);
+
+/*________utils.c__________*/
+long	ft_current_time(void);
+void	print_of_action(t_param *param, unsigned long time, int option);
 
 #endif

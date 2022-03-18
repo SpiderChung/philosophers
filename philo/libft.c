@@ -6,11 +6,29 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 19:57:07 by schung            #+#    #+#             */
-/*   Updated: 2022/03/18 20:16:21 by schung           ###   ########.fr       */
+/*   Updated: 2022/03/18 20:29:47 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers/philo.h"
+
+int	ft_strlen(const char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		i++;
+	}
+	return (i);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	if (s)
+		write(fd, s, ft_strlen(s));
+}
 
 void	ft_bzero(void *src, size_t len)
 {
