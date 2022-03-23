@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 18:44:38 by schung            #+#    #+#             */
-/*   Updated: 2022/03/18 21:44:17 by schung           ###   ########.fr       */
+/*   Updated: 2022/03/23 18:51:05 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,24 @@
 
 typedef struct s_philo
 {
-	int 	index;
+	int		index;
 	int		left_fork;
-	int		right_fork;	
+	int		right_fork;
+	long	last_eat;
 }	t_philo;
 
 typedef struct s_param
 {
-	int			number_of_philo;
-	int			time_to_die;
-	int			time_to_eat;
-	int			time_to_sleep;
-	int			number_of_times;
-	pthread_t	*thread;
+	int				quantity_of_philo;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				number_of_times;
+	int				index_philo;
+	unsigned long	start_time;
+	pthread_t		*thread;
+	t_philo			*philo;
+	t_fork			*fork;
 }	t_param;
 
 typedef struct s_fork
@@ -65,6 +70,7 @@ int		ft_atoi(const char *str);
 int		is_thinking(t_param *param);
 int		is_sleeping(t_param *param);
 int		is_eating(t_param *param);
+int		is_living(t_param *param);
 
 /*________utils.c__________*/
 long	ft_current_time(void);
