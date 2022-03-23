@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 21:00:30 by schung            #+#    #+#             */
-/*   Updated: 2022/03/18 21:52:08 by schung           ###   ########.fr       */
+/*   Updated: 2022/03/23 19:03:45 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,25 @@ long	ft_current_time(void)
 	gettimeofday(&current_time, NULL);
 	return (current_time.tv_sec * 1000 + current_time.tv_usec / 1000);
 }
+
+void	init_philos(t_param *param)
+{
+	param->fork = malloc(sizeof(param->fork[param->quantity_of_philo]));
+	if (!param->fork)
+	{
+		free(param->thread);
+		return (1);
+	}
+	param->philo = malloc(sizeof(param->philo[param->quantity_of_philo]));
+	if (!param->philo)
+	{
+		free(param->thread);
+		free(param->fork);
+		return (1);
+	}
+	return (0);
+}
+
 
 void	print_of_action(t_param *param, unsigned long time, int option)
 {

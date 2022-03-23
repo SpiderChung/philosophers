@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 18:38:37 by schung            #+#    #+#             */
-/*   Updated: 2022/03/23 18:47:36 by schung           ###   ########.fr       */
+/*   Updated: 2022/03/23 18:59:43 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	set_param(char **argv, t_param *param)
 		param->number_of_times = ft_atoi(argv[5]);
 	else
 		param->number_of_times = -1;
+	init_philos(param);
 	return (0);
 }
 
@@ -58,7 +59,7 @@ int main(int argc, char **argv)
 	{
 		if (set_param(argv, &param))
 			return (1);
-		start()
+		start(&param);
 	}
 	else
 	{
