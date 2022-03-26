@@ -6,15 +6,15 @@
 #    By: schung <schung@student.21-school.ru>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/18 18:44:32 by schung            #+#    #+#              #
-#    Updated: 2022/03/18 21:04:17 by schung           ###   ########.fr        #
+#    Updated: 2022/03/25 21:04:47 by schung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-HEADER = philo/headers/philo.h
+HEADER = headers/philo.h
 
-SRC = philo/philo.c \
+SRC = philo.c living_thing.c utils.c libft.c\
 
 OBJ = ${SRC:.c=.o}
 

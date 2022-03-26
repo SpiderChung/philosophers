@@ -6,13 +6,13 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 18:38:37 by schung            #+#    #+#             */
-/*   Updated: 2022/03/23 18:59:43 by schung           ###   ########.fr       */
+/*   Updated: 2022/03/26 21:16:52 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers/philo.h"
 
-void start(t_param *param)
+void	start(t_param *param)
 {
 	param->start_time = ft_current_time();
 	while (param->index_philo < param->quantity_of_philo)
@@ -33,27 +33,18 @@ void start(t_param *param)
 	}
 }
 
-int	set_param(char **argv, t_param *param)
+int	the_end(t_param *param)
 {
-	ft_bzero(param, sizeof(param));
-	param->quantity_of_philo = ft_atoi(argv[1]);
-	param->time_to_die = ft_atoi(argv[2]) * 1000;
-	param->time_to_eat = ft_atoi(argv[3]) * 1000;
-	param->time_to_sleep = ft_atoi(argv[4]) * 1000;
-	param->thread = malloc(sizeof(pthread_t[param->quantity_of_philo]));
-	if (!param->thread)
-		return (1);
-	if (argv[5])
-		param->number_of_times = ft_atoi(argv[5]);
-	else
-		param->number_of_times = -1;
-	init_philos(param);
+	free(param->thread);
+	free(param->philo);
+	free(param->fork);
+	printf("\n--------Voilà!--------");
 	return (0);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_param param;
+	t_param	param;
 
 	if ((argc == 5) || (argc == 6))
 	{
@@ -66,5 +57,5 @@ int main(int argc, char **argv)
 		ft_putstr_fd(ERR, STDERR);
 		return (1);
 	}
-	return (0);
+	return (the_end(&param));
 }

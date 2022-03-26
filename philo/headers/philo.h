@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 18:44:38 by schung            #+#    #+#             */
-/*   Updated: 2022/03/23 18:51:05 by schung           ###   ########.fr       */
+/*   Updated: 2022/03/26 21:00:39 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define THINK 1
 # define SLEEP 2
 # define EAT 3
+# define DIED 4
 
 typedef struct s_philo
 {
@@ -36,12 +37,20 @@ typedef struct s_philo
 	long	last_eat;
 }	t_philo;
 
+typedef struct s_fork
+{
+	int				index;
+	pthread_mutex_t	fork_taken;
+
+}	t_fork;
+
 typedef struct s_param
 {
 	int				quantity_of_philo;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
+	int				times;
 	int				number_of_times;
 	int				index_philo;
 	unsigned long	start_time;
@@ -50,15 +59,9 @@ typedef struct s_param
 	t_fork			*fork;
 }	t_param;
 
-typedef struct s_fork
-{
-	int				index;
-	pthread_mutex_t	fork_taken;
-
-}	t_fork;
-
 /*________philo.c__________*/
-int		set_param(char **argv, t_param *param);
+void	start(t_param *param);
+int		the_end(t_param *param);
 
 /*________libft.c__________*/
 int		ft_strlen(const char *str);
@@ -67,13 +70,16 @@ void	ft_bzero(void *src, size_t len);
 int		ft_atoi(const char *str);
 
 /*________living_things.c__________*/
-int		is_thinking(t_param *param);
-int		is_sleeping(t_param *param);
-int		is_eating(t_param *param);
-int		is_living(t_param *param);
+void	is_thinking(t_param *param, int i);
+void	is_sleeping(t_param *param, int i);
+void	is_eating(t_param *param, int i);
+void	*is_living(void *param);
 
 /*________utils.c__________*/
+void	ft_usleep(unsigned long time);
 long	ft_current_time(void);
-void	print_of_action(t_param *param, unsigned long time, int option);
+void	print_of_action(int index, unsigned long time, int option);
+void	init_philos(t_param *param);
+int		set_param(char **argv, t_param *param);
 
 #endif
