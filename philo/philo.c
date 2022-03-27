@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 18:38:37 by schung            #+#    #+#             */
-/*   Updated: 2022/03/26 21:16:52 by schung           ###   ########.fr       */
+/*   Updated: 2022/03/27 20:52:12 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	start(t_param *param)
 		usleep(50);
 		param->index_philo += 2;
 	}
+	param->index_philo = 1;
 	while (param->index_philo < param->quantity_of_philo)
 	{
 		param->philo[param->index_philo].last_eat = param->start_time;
@@ -33,12 +34,28 @@ void	start(t_param *param)
 	}
 }
 
+void	dead_on_time(int n, t_param *param)
+{
+	unsigned long	time;
+	int				i;
+
+	time = ft_current_time() - param->start_time;
+	print_of_action(param->philo[n].index, time, DIED);
+	param->stop_life = param->quantity_of_philo;
+	i = 0;
+	while (i < param->quantity_of_philo)
+	{
+		pthread_detach(param->thread[i]);
+		i++;
+	}
+}
+
 int	the_end(t_param *param)
 {
 	free(param->thread);
 	free(param->philo);
 	free(param->fork);
-	printf("\n--------Voilà!--------");
+	printf("\n--------Voilà!--------\n");
 	return (0);
 }
 
@@ -51,6 +68,7 @@ int	main(int argc, char **argv)
 		if (set_param(argv, &param))
 			return (1);
 		start(&param);
+		check_dead(&param);
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 18:44:38 by schung            #+#    #+#             */
-/*   Updated: 2022/03/26 21:00:39 by schung           ###   ########.fr       */
+/*   Updated: 2022/03/27 20:46:20 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_param
 	int				times;
 	int				number_of_times;
 	int				index_philo;
+	int				stop_life;
 	unsigned long	start_time;
 	pthread_t		*thread;
 	t_philo			*philo;
@@ -62,6 +63,7 @@ typedef struct s_param
 /*________philo.c__________*/
 void	start(t_param *param);
 int		the_end(t_param *param);
+void	dead_on_time(int n, t_param *param);
 
 /*________libft.c__________*/
 int		ft_strlen(const char *str);
@@ -74,12 +76,13 @@ void	is_thinking(t_param *param, int i);
 void	is_sleeping(t_param *param, int i);
 void	is_eating(t_param *param, int i);
 void	*is_living(void *param);
+void	check_dead(t_param *param);
 
 /*________utils.c__________*/
 void	ft_usleep(unsigned long time);
 long	ft_current_time(void);
 void	print_of_action(int index, unsigned long time, int option);
-void	init_philos(t_param *param);
+void	init_forks(t_param *param);
 int		set_param(char **argv, t_param *param);
 
 #endif

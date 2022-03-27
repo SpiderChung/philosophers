@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 21:00:30 by schung            #+#    #+#             */
-/*   Updated: 2022/03/26 20:55:01 by schung           ###   ########.fr       */
+/*   Updated: 2022/03/27 20:25:36 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ long	ft_current_time(void)
 	return (current_time.tv_sec * 1000 + current_time.tv_usec / 1000);
 }
 
-void	init_philos(t_param *param)
+void	init_forks(t_param *param)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < param->quantity_of_philo)
@@ -46,7 +46,6 @@ void	init_philos(t_param *param)
 		pthread_mutex_init(&param->fork[i].fork_taken, NULL);
 		i++;
 	}
-	return (0);
 }
 
 int	set_param(char **argv, t_param *param)
@@ -76,7 +75,7 @@ int	set_param(char **argv, t_param *param)
 		free(param->fork);
 		return (1);
 	}
-	init_philos(param);
+	init_forks(param);
 	return (0);
 }
 
