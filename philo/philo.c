@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 18:38:37 by schung            #+#    #+#             */
-/*   Updated: 2022/03/27 20:52:12 by schung           ###   ########.fr       */
+/*   Updated: 2022/03/28 21:05:53 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ void	dead_on_time(int n, t_param *param)
 	int				i;
 
 	time = ft_current_time() - param->start_time;
+	ft_usleep(10);
 	print_of_action(param->philo[n].index, time, DIED);
-	param->stop_life = param->quantity_of_philo;
+	param->stop = param->quantity_of_philo;
 	i = 0;
 	while (i < param->quantity_of_philo)
 	{
@@ -55,7 +56,7 @@ int	the_end(t_param *param)
 	free(param->thread);
 	free(param->philo);
 	free(param->fork);
-	printf("\n--------Voilà!--------\n");
+	printf("\n-----------Voilà!-----------\n");
 	return (0);
 }
 
@@ -66,7 +67,10 @@ int	main(int argc, char **argv)
 	if ((argc == 5) || (argc == 6))
 	{
 		if (set_param(argv, &param))
+		{
+			ft_putstr_fd(INIT_ERR, STDERR);
 			return (1);
+		}
 		start(&param);
 		check_dead(&param);
 	}

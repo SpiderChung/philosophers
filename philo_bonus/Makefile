@@ -6,15 +6,15 @@
 #    By: schung <schung@student.21-school.ru>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/18 18:44:32 by schung            #+#    #+#              #
-#    Updated: 2022/03/18 21:05:22 by schung           ###   ########.fr        #
+#    Updated: 2022/03/28 21:11:27 by schung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo_bonus
 
-HEADER = philo_bonus/headers/philo_bonus.h
+HEADER = headers/philo_bonus.h
 
-SRC = philo_bonus/philo_bonus.c \
+SRC = philo_bonus.c libft.c utils.c\
 
 OBJ = ${SRC:.c=.o}
 

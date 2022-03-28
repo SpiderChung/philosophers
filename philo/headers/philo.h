@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 18:44:38 by schung            #+#    #+#             */
-/*   Updated: 2022/03/27 20:46:20 by schung           ###   ########.fr       */
+/*   Updated: 2022/03/28 20:40:50 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define STDOUT 1
 # define STDERR 2
 # define ERR "Incorrect arguments\n"
+# define INIT_ERR "Initialization error\n"
 # define TAKE_FORK 0
 # define THINK 1
 # define SLEEP 2
@@ -53,7 +54,7 @@ typedef struct s_param
 	int				times;
 	int				number_of_times;
 	int				index_philo;
-	int				stop_life;
+	int				stop;
 	unsigned long	start_time;
 	pthread_t		*thread;
 	t_philo			*philo;
@@ -82,7 +83,7 @@ void	check_dead(t_param *param);
 void	ft_usleep(unsigned long time);
 long	ft_current_time(void);
 void	print_of_action(int index, unsigned long time, int option);
-void	init_forks(t_param *param);
+int		init_forks(t_param *param);
 int		set_param(char **argv, t_param *param);
 
 #endif

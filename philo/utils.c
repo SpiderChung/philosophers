@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 21:00:30 by schung            #+#    #+#             */
-/*   Updated: 2022/03/27 20:25:36 by schung           ###   ########.fr       */
+/*   Updated: 2022/03/28 20:38:44 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,17 @@ long	ft_current_time(void)
 	return (current_time.tv_sec * 1000 + current_time.tv_usec / 1000);
 }
 
-void	init_forks(t_param *param)
+int	init_forks(t_param *param)
 {
 	int	i;
 
+	param->fork = malloc(sizeof(t_fork[param->quantity_of_philo]));
+	if (!param->fork)
+	{
+		free(param->thread);
+		free(param->philo);
+		return (1);
+	}
 	i = 0;
 	while (i < param->quantity_of_philo)
 	{
@@ -46,15 +53,17 @@ void	init_forks(t_param *param)
 		pthread_mutex_init(&param->fork[i].fork_taken, NULL);
 		i++;
 	}
+	return (0);
 }
 
 int	set_param(char **argv, t_param *param)
 {
 	ft_bzero(param, sizeof(param));
 	param->quantity_of_philo = ft_atoi(argv[1]);
-	param->time_to_die = ft_atoi(argv[2]) * 1000;
-	param->time_to_eat = ft_atoi(argv[3]) * 1000;
-	param->time_to_sleep = ft_atoi(argv[4]) * 1000;
+	param->time_to_die = ft_atoi(argv[2]);
+	param->time_to_eat = ft_atoi(argv[3]);
+	param->time_to_sleep = ft_atoi(argv[4]);
+	param->index_philo = 0;
 	param->thread = malloc(sizeof(pthread_t[param->quantity_of_philo]));
 	if (!param->thread)
 		return (1);
@@ -62,21 +71,13 @@ int	set_param(char **argv, t_param *param)
 		param->number_of_times = ft_atoi(argv[5]);
 	else
 		param->number_of_times = -1;
-	param->fork = malloc(sizeof(t_fork[param->quantity_of_philo]));
-	if (!param->fork)
-	{
-		free(param->thread);
-		return (1);
-	}
 	param->philo = malloc(sizeof(t_philo[param->quantity_of_philo]));
 	if (!param->philo)
 	{
 		free(param->thread);
-		free(param->fork);
 		return (1);
 	}
-	init_forks(param);
-	return (0);
+	return (init_forks(param));
 }
 
 void	print_of_action(int index, unsigned long time, int option)
