@@ -6,7 +6,7 @@
 #    By: schung <schung@student.21-school.ru>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/18 18:44:32 by schung            #+#    #+#              #
-#    Updated: 2022/03/28 21:11:27 by schung           ###   ########.fr        #
+#    Updated: 2022/03/29 18:41:22 by schung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = philo_bonus
 
 HEADER = headers/philo_bonus.h
 
-SRC = philo_bonus.c libft.c utils.c\
+SRC = philo_bonus.c libft_bonus.c utils_bonus.c living_things_bonus.c \
 
 OBJ = ${SRC:.c=.o}
 
@@ -39,11 +39,11 @@ $(NAME): $(OBJ)
 
 clean:
 	@$(REMOVE) $(OBJ)
-	@echo "$(YELLOW)[INFO] Removed [$(NAME)] objects"
+	@echo "$(LIGHTRED)[INFO] Removed [$(NAME)] objects"
 
 fclean: clean
 	@$(REMOVE) $(NAME) $(OBJ)
-	@echo "$(YELLOW)[INFO] [$(NAME)] and objects removed"
+	@echo "$(LIGHTRED)[INFO] [$(NAME)] and objects removed"
 
 re: fclean all
 

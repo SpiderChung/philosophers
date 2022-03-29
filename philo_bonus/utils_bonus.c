@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/18 21:00:30 by schung            #+#    #+#             */
-/*   Updated: 2022/03/29 20:34:23 by schung           ###   ########.fr       */
+/*   Created: 2022/03/29 18:46:54 by schung            #+#    #+#             */
+/*   Updated: 2022/03/29 21:05:59 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "headers/philo.h"
+#include "headers/philo_bonus.h"
 
 void	ft_usleep(unsigned long time)
 {
@@ -29,30 +29,19 @@ long	ft_current_time(void)
 	return (current_time.tv_sec * 1000 + current_time.tv_usec / 1000);
 }
 
-int	init_forks(t_param *param)
+int	init_sem(t_param *param)
 {
 	int	i;
 
-	param->fork = malloc(sizeof(t_fork[param->quantity_of_philo]));
-	if (!param->fork)
-	{
-		free(param->thread);
-		free(param->philo);
-		return (1);
-	}
+	sem_unlink(SEM_DEAD);
+	sem_unlink(SEM_FORK);
+	sem_unlink(SEM_WRITE);
 	i = 0;
-	while (i < param->quantity_of_philo)
-	{
-		param->philo[i].index = i + 1;
-		param->philo[i].left_fork = i;
-		if (i - 1 < 0)
-			param->philo[i].right_fork = param->quantity_of_philo - 1;
-		else
-			param->philo[i].right_fork = i - 1;
-		param->fork[i].index = i + 1;
-		pthread_mutex_init(&param->fork[i].fork_taken, NULL);
-		i++;
-	}
+	param->forks = ft_sem_open(SEM_FORK, param->quantity_of_philo);
+	param->dead = ft_sem_open(SEM_DEAD, 0);
+	param->writing = sem_open(SEM_WRITE, 1);
+	if (param->forks < 0 || param->dead < 0 || param->writing < 0)
+		return (1);
 	return (0);
 }
 
@@ -64,9 +53,6 @@ int	set_param(char **argv, t_param *param)
 	param->time_to_eat = ft_atoi(argv[3]);
 	param->time_to_sleep = ft_atoi(argv[4]);
 	param->index_philo = 0;
-	param->thread = malloc(sizeof(pthread_t[param->quantity_of_philo]));
-	if (!param->thread)
-		return (1);
 	if (argv[5])
 		param->number_of_times = ft_atoi(argv[5]);
 	else
@@ -81,7 +67,7 @@ int	set_param(char **argv, t_param *param)
 		free(param->thread);
 		return (1);
 	}
-	return (init_forks(param));
+	return (init_sem(param) || init_philos(param));
 }
 
 void	print_of_action(int index, unsigned long time, int option)
